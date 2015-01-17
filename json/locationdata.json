@@ -1,0 +1,26 @@
+{
+	"wearables": {
+		"Python":25,
+		"C++":25,
+		"PHP":25,
+		"CSS":25
+	},
+	"swartz": {
+		"JavaScript":25,
+		"Python":75
+	},
+	"ios": {
+		"Objective-C":100
+	},
+	"vr": {
+		"C++":75,
+		"C":25
+	},
+	"wozniak": {
+		"PHP":33.3,
+		"CSS":33.3,
+		"HTML":33.3
+	}
+	
+
+}

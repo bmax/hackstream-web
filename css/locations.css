@@ -1,0 +1,81 @@
+.room p {
+	display: inline-block;
+	padding: 10px;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+}
+.percents {
+	position: fixed;
+	top: 71px;
+	left: 0;
+	width: 100%;
+	display:none;
+}
+.room {
+	cursor: pointer;
+	display: inline-block;
+	position: absolute;
+}
+#wearables {
+	height: 5.5%;
+	width: 6.5%;
+	bottom: 23%;
+	right: 12%;
+}
+#vr {
+	height: 5.5%;
+	width: 7.5%;
+	bottom: 23%;
+	right: 18.5%;
+}
+div#wozniak {
+	height: 5.5%;
+	width: 8.5%;
+	bottom: 23%;
+	right: 26%;
+}
+div#asimov {
+	height: 5.5%;
+	width: 7%;
+	bottom: 23%;
+	right: 34%;
+}
+div#tesla {
+	height: 9.5%;
+	width: 8%;
+	bottom: 10%;
+	right: 33%;
+}
+div#turing {
+	height: 10.5%;
+	width: 14.5%;
+	bottom: 10%;
+	right: 18.5%;
+}
+div#hopper {
+	height: 9.5%;
+	width: 8%;
+	bottom: 10%;
+	right: 10.5%;
+}
+div#ios {
+	height: 9.5%;
+	width: 10%;
+	bottom: 22%;
+	right: 76%;
+}
+div#swartz {
+	height: 8.5%;
+	width: 6.5%;
+	bottom: 22%;
+	right: 86%;
+}
+#map {
+	position:relative;
+	display:inline-block;
+}
+#init {
+	width: 100%;
+	background: black;
+}

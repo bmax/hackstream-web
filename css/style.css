@@ -8,10 +8,17 @@ body {
 	background-color:white;
 	padding: 15px;
 	border-bottom: 1px solid rgba(232, 232, 232, 1);
+	position: fixed;
+width: 100%;
+z-index: 100;
+top: 0;
 }
 .nav h1 {
 	margin:0;
 	display:inline-block;
+}
+#header, #header:hover {
+	color:#333;
 }
 h3 {
 	text-align: center;
@@ -109,4 +116,7 @@ bottom: 0px;
 top: 21px;
 text-align: center;
 width: 23px;
+}
+.content_wrap {
+	padding-top:71px;	
 }
