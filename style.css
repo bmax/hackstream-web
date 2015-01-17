@@ -65,9 +65,9 @@ position:relative;
 }
 p.relTime {
 position: absolute;
-bottom: -4px;
-left: 82px;
-font-size: .55em;
+top: 1px;
+right: 10px;
+font-size: .7em;
 color: rgb(147, 147, 147);
 }
 #more {
@@ -82,31 +82,8 @@ cursor: pointer;
 #viewmoreContent,#viewmoreText {
 	display:none;
 }
+
 #viewmoreText {
-	padding:15px 0;
 	text-align:center;
-	cursor:pointer;
-}
-.votes {
-display: table-cell;
-height: 100%;
-width: 31px;
-position: relative;
-top: 0;
-}
-.votes img {
-	position:absolute;
-	cursor:pointer;
-}
-.votes img:first-child {
-top: 0px;
-}
-.votes img:last-child {
-bottom: 0px;
-}
-.votesCount {
-	position: absolute;
-top: 21px;
-text-align: center;
-width: 23px;
+	padding:15px 0;
 }

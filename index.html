@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css" >
 	<link rel="stylesheet" href="css/style.css">
 	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="jquery-ui/jquery-ui.css">
 </head>
 <body>
 	<div class="nav">
@@ -13,7 +14,7 @@
         <p id="login">Login</p>
     </div>
     <h3>Live activity from MHacks V</h3>
-<div id="viewmoreText" class="activity">6 New Activities</div>
+<div id="viewmoreText" class="activity">4 New Activities</div>
 <div id="viewmoreContent">
 
 	<div class="activity">
@@ -24,7 +25,13 @@
 		<img src="images/gitPic.jpg" class="icon userPic">
 		<p><a href="">john3123</a> pushed to <a href="">mhacks-web: </a>  Lorem Ipsum Github dipsum</p>
 		<p class="relTime">45 min ago</p>
+		
 	</div>
+	<div class="votes">
+			<img src="images/up.png">
+			<p class="votesCount">0</p>
+			<img src="images/down.png">
+		</div>
 	</div>
 	<div class="activity">
 		<div class="logo git">
@@ -126,19 +133,19 @@
 	<div id="more" ><img src="images/more.png"></div>
 </body>
 </html>
-<script src="https://code.jquery.com/jquery-2.1.3.min.js">
-</script>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="jquery-ui/jquery-ui.min.js"></script>
 <script>
 $(document).ready( function() {
 	setTimeout(function(){
 		$("#viewmoreText").slideDown(600);
-		console.log("gi");
-	},5000);
+	},2000);
 });
 
 $("#viewmoreText").click(function(event) {
-	$("#viewmoreContent").toggle();
 	$("#viewmoreText").hide();
+	$("#viewmoreContent").slideDown(600);
+	$("#viewmoreContent .activity").effect("highlight",3000);
 });
 
 </script>
