@@ -172,7 +172,7 @@
             }
             //if only one commit
             if(postData.messages.length==1) {
-              postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: '+postData.messages[0]+'</p><div class="smallPostText"><p class="relTime">'+relTimeForHtml+' </p> <a href="'+postData.commit_urls[0]+'">commit</a></div><div class="votes"><img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>';
+              postHTML = '<div class="activity"><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: '+postData.messages[0]+'</p><div class="smallPostText"><p class="relTime">'+relTimeForHtml+' </p> <a href="'+postData.commit_urls[0]+'">commit</a></div><div class="votes"><img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>';
               }
               //multiple commits in this push
               else {
@@ -183,7 +183,7 @@
                       extraCommits+="<li><a href='"+postData.commit_urls[i]+"'>commit</a> "+postData.messages[i]+"</li>";
                     }
                     extraCommits+="</ul></div>";
-                postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: <a class="commitLink" onclick="$(extra_'+id+').slideToggle(500); return false;">'+num_posts+' commits</a><div class="smallPostText"><p class="relTime">'+relTimeForHtml+'</p></div></p></div><div class="votes">\<img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>'+extraCommits+'</div>';
+                postHTML = '<div class="activity"><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: <a class="commitLink" onclick="$(extra_'+id+').slideToggle(500); return false;">'+num_posts+' commits</a><div class="smallPostText"><p class="relTime">'+relTimeForHtml+'</p></div></p></div><div class="votes">\<img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>'+extraCommits+'</div>';
               }
               $("#allPosts").append(postHTML);
             }
