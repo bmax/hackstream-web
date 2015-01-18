@@ -16,7 +16,7 @@
       <a class="navlink" id="login" href="http://2f6e6945.ngrok.com/login">Login</a>
       <p id="loggedin" style="display:none;">
       <a class="navlink" href="http://2f6e6945.ngrok.com/logout">Logout</a>
-      <img src="" width="40" height="40" alt="Avatar" id="avatarLoggedIn"/>
+      <img src="" width="40" height="40" alt="Avatar" id="avatarLoggedIn"/>	
       </p> 
     </div>
   </div>
@@ -64,7 +64,6 @@
 <script src="js/jquery.cookie.js">
 </script>
 <script>
-  var ServerURL = "http://4f1659cc.ngrok.com";
   function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -78,12 +77,13 @@
     setTimeout(function(){
       $("#viewmoreText").slideDown(200);
     },2000);
+  });
 
-    $("#viewmoreText").click(function(event) {
-      $("#viewmoreText").hide();
-      $("#viewmoreContent").slideDown(600);
-      $("#viewmoreContent .activity").effect("highlight",3000);
-    });
+  $("#viewmoreText").click(function(event) {
+    $("#viewmoreText").hide();
+    $("#viewmoreContent").slideDown(600);
+    $("#viewmoreContent .activity").effect(	"highlight",3000);
+  });
 
     var a_t = getParameterByName("access_token")
     var logout = getParameterByName("logout")
@@ -96,7 +96,7 @@
     if (isLoggedIn()) {
 
       $.ajax({
-        url: ServerURL+"/user/"+$.cookie("access_token"),
+        url: "http://2f6e6945.ngrok.com/user/"+$.cookie("access_token"),
         type: 'GET',
         dataType: 'json',
         crossDomain: true,
@@ -113,6 +113,17 @@
     else {
     	$("#navright").css("display","inline-block");	
     }
-  
+  	$.ajax({
+  		url:"http://2f636945.ngrok.com/posts",
+  		type: "GET",
+  		dataType: "json",
+  		crossDomain: true,
+  		success: function(data) {
+  			console.log(data);
+  		},
+  		error: function(er) {
+  			console.log(er);
+  		}
+  	});
 </script>
 </html>
