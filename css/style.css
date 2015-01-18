@@ -59,7 +59,6 @@ h3 {
   margin: 2px auto;
   display: table;
   position: relative;
-  overflow: hidden;
 }
 .logo {
   display: table-cell;
@@ -138,4 +137,13 @@ p.relTime {
 img#avatarLoggedIn {
 border-radius: 3px;
 margin: -9px 0 0 5px;
+}
+.extraCommits {
+	display: inline-block;
+font-size: .7em;
+position: absolute;
+border: 1px solid rgba(232, 232, 232, 1);
+padding: 10px;
+z-index: 5;
+background: white;
 }
