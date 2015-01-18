@@ -14,9 +14,9 @@
     <a id="header" href="/"><h1>HackStream</h1></a>
     <div id="navright">
       <a class="navlink" href="map.html">Map</a>
-      <a class="navlink" id="login" href="http://2f6e6945.ngrok.com/login">Login</a>
+      <a class="navlink" id="login" href="https://hidden-cove-2579.herokuapp.com/login">Login</a>
       <p id="loggedin" style="display:none;">
-      <a class="navlink" href="http://2f6e6945.ngrok.com/logout">Logout</a>
+      <a class="navlink" href="https://hidden-cove-2579.herokuapp.com/logout">Logout</a>
       <img src="" width="40" height="40" alt="Avatar" id="avatarLoggedIn"/>	
       </p> 
     </div>
@@ -137,7 +137,7 @@ $(document).ready(function() {
     if (isLoggedIn()) {
 
       $.ajax({
-        url: "http://2f6e6945.ngrok.com/user/"+$.cookie("access_token"),
+        url: "https://hidden-cove-2579.herokuapp.com/user/"+$.cookie("access_token"),
         type: 'GET',
         dataType: 'json',
         crossDomain: true,

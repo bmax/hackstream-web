@@ -16,7 +16,7 @@
       <a class="navlink" href="map.html">Map</a>
       <a class="navlink" id="login" href="https://hidden-cove-2579.herokuapp.com/login">Login</a>
       <p id="loggedin" style="display:none;">
-      <a class="navlink" id="logout" href="">Logout</a>
+      <a class="navlink" href="https://hidden-cove-2579.herokuapp.com/logout">Logout</a>
       <img src="" width="40" height="40" alt="Avatar" id="avatarLoggedIn"/>	
       </p> 
     </div>
@@ -37,8 +37,7 @@
 <script src="js/jquery.cookie.js">
 </script>
 <script>
-
-  var ServerURL = "http://hidden-cove-2579.herokuapp.com/";
+  var ServerURL = "http://hidden-cove-2579.herokuapp.com";
   var host = ServerURL.replace(/^http/, 'ws')
   // if user is running mozilla then use it's built-in WebSocket
   window.WebSocket = window.WebSocket || window.MozWebSocket;
@@ -186,7 +185,6 @@
           console.log("error" + er);
         }
       });
-
     });
   </script>
 </html>
