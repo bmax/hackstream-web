@@ -14,9 +14,9 @@
     <a id="header" href="/"><h1>HackStream</h1></a>
     <div id="navright">
       <a class="navlink" href="map.html">Map</a>
-      <a class="navlink" id="login" href="http://4f1659cc.ngrok.com/login">Login</a>
+      <a class="navlink" id="login" href="https://hidden-cove-2579.herokuapp.com/login">Login</a>
       <p id="loggedin" style="display:none;">
-      <a class="navlink" href="http://4f1659cc.ngrok.com/logout">Logout</a>
+      <a class="navlink" href="https://hidden-cove-2579.herokuapp.com/logout">Logout</a>
       <img src="" width="40" height="40" alt="Avatar" id="avatarLoggedIn"/>	
       </p> 
     </div>
@@ -37,7 +37,7 @@
 <script src="js/jquery.cookie.js">
 </script>
 <script>
-  var ServerURL = "http://4f1659cc.ngrok.com";
+  var ServerURL = "https://hidden-cove-2579.herokuapp.com";
   function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -119,7 +119,7 @@
   						extraCommits+="<li><a href='"+postData.commit_urls[i]+"'>commit</a> "+postData.messages[i]+"</li>";
   					}
   					extraCommits+="</ul></div>";
-  					var postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: <a class="commitLink" onclick="$(extra_'+id+').slideToggle(500); return false;">'+num_posts+' commits</a><div class="smallPostText"><p class="relTime">'+relTimeForHtml+'</p></div></p></div><div class="votes">\<img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>'+extraCommits+'</div>';
+  					var postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: <a class="commitLink" title="Click to Expand" onclick="$(extra_'+id+').slideToggle(500); return false;">'+num_posts+' commits</a><div class="smallPostText"><p class="relTime">'+relTimeForHtml+'</p></div></p></div><div class="votes">\<img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>'+extraCommits+'</div>';
   				}
   				
 				$("#allPosts").append(postHTML);
