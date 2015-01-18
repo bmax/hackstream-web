@@ -94,13 +94,13 @@
   		crossDomain: true,
   		success: function(data) {
   			console.log(data);
-  			for(post in data) {
-  				var postData = data[post]
+  			for(var j=data.length-1; j>=0;j--) {
+  				var postData = data[j]
   				console.log(postData);
   				
   				var tmpTime = new Date();
 				var currentTimeMillis = tmpTime.getTime();
-
+				var postTime = new Date(postData.time);
 				var relativeTime = new Date(currentTimeMillis - postData.time);
 				var relMinutes = "0" + relativeTime.getMinutes();
 				console.log(parseInt(postData.time));
