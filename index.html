@@ -9,10 +9,8 @@
 	<link rel="stylesheet" href="jquery-ui/jquery-ui.css">
 </head>
 <body>
-	<div class="nav">
-        <h1>HackStream</h1>
-        <p id="login">Login</p>
-    </div>
+	<?php include "nav.php";?>
+	<div class="content_wrap">
     <h3>Live activity from MHacks V</h3>
 <div id="viewmoreText" class="activity">4 New Activities</div>
 <div id="viewmoreContent">
@@ -35,7 +33,23 @@
 	</div>
 	<?php } ?>
 </div>
-
+	<div class="activity">
+		<div class="logo git">
+			<img src="images/github.png" class="icon">
+		</div>
+		<div class="text">
+		<img src="images/gitPic.jpg" class="icon userPic">
+		<p><a href="">john3123</a> pushed to <a href="">mhacks-web: </a>  Lorem Ipsum Github dipsum</p>
+		<p class="relTime">45 min ago</p>
+		
+	</div>
+	<div class="votes">
+			<img src="images/up.png">
+			<p class="votesCount">0</p>
+			<img src="images/down.png">
+		</div>
+	</div>
+</div>
 </body>
 </html>
 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
@@ -43,7 +57,7 @@
 <script>
 $(document).ready( function() {
 	setTimeout(function(){
-		$("#viewmoreText").slideDown(600);
+		$("#viewmoreText").slideDown(200);
 	},2000);
 });
 
