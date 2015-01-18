@@ -107,6 +107,14 @@
       });
     $(document).ready(function() {
 
+      jQuery.ajaxPrefilter(function( options, originalOptions, xhr ) {
+        if ( !options.beforeSend) {
+          options.beforeSend = addHeaders 
+        }
+      });
+      jQuery.ajaxSetup({
+        beforeSend: addHeaders
+      });
 
       $("#viewmoreText").click(function(event) {
         $("#viewmoreText").hide();
