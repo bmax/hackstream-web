@@ -64,6 +64,7 @@
 <script src="js/jquery.cookie.js">
 </script>
 <script>
+  var ServerURL = "http://2f6e6945.ngrok.com";
   function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -96,7 +97,7 @@
     if (isLoggedIn()) {
 
       $.ajax({
-        url: "http://2f6e6945.ngrok.com/user/"+$.cookie("access_token"),
+        url: ServerURL+"/user/"+$.cookie("access_token"),
         type: 'GET',
         dataType: 'json',
         crossDomain: true,
@@ -114,7 +115,7 @@
     	$("#navright").css("display","inline-block");	
     }
   	$.ajax({
-  		url:"http://2f636945.ngrok.com/posts",
+  		url:ServerURL+"/posts",
   		type: "GET",
   		dataType: "json",
   		crossDomain: true,
