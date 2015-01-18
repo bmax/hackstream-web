@@ -64,6 +64,7 @@
 <script src="js/jquery.cookie.js">
 </script>
 <script>
+  var ServerURL = "http://4f1659cc.ngrok.com";
   function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -77,13 +78,12 @@
     setTimeout(function(){
       $("#viewmoreText").slideDown(200);
     },2000);
-  });
 
-  $("#viewmoreText").click(function(event) {
-    $("#viewmoreText").hide();
-    $("#viewmoreContent").slideDown(600);
-    $("#viewmoreContent .activity").effect(	"highlight",3000);
-  });
+    $("#viewmoreText").click(function(event) {
+      $("#viewmoreText").hide();
+      $("#viewmoreContent").slideDown(600);
+      $("#viewmoreContent .activity").effect("highlight",3000);
+    });
 
     var a_t = getParameterByName("access_token")
     var logout = getParameterByName("logout")
@@ -96,7 +96,7 @@
     if (isLoggedIn()) {
 
       $.ajax({
-        url: "http://2f6e6945.ngrok.com/user/"+$.cookie("access_token"),
+        url: ServerURL+"/user/"+$.cookie("access_token"),
         type: 'GET',
         dataType: 'json',
         crossDomain: true,
