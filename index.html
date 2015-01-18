@@ -69,7 +69,7 @@
       if(relativeUnixTime.getMinutes()>60) {
         var relTimeForHtml = relativeUnixTime.getHours().toString()+" hours ago";
       }
-      postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: '+postData.messages[0]+'</p><div class="smallPostText"><p class="relTime">'+relTimeForHtml+' </p> <a href="'+postData.commit_urls[0]+'">commit</a></div><div class="votes"><img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>';
+      postHTML = '<div class="activity"><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: '+postData.messages[0]+'</p><div class="smallPostText"><p class="relTime">'+relTimeForHtml+' </p> <a href="'+postData.commit_urls[0]+'">commit</a></div><div class="votes"><img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>';
         $("#allPosts").prepend(postHTML);
       }
     };
