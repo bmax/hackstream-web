@@ -12,13 +12,13 @@
   <div class="nav">
     <a id="header" href="/"><h1>HackStream</h1></a>
     <div id="navright">
-      <a class="navlink" href="map.php">Map</a>
-      <p id="login">     
-      <a class="navlink" href="http://4f1659cc.ngrok.com/login">Login</a>
-      </p>
+      <a class="navlink" href="map.html">Map</a>
+      <!-- <p id="login">      -->
+      <a class="navlink" href="http://2f6e6945.ngrok.com/login">Login</a>
+      <!-- </p> -->
       <p id="loggedin" style="Display:none;">
       <img src="" width="50" height="50" alt="Avatar" id="avatarLoggedIn"/>
-      <a href="http://4f1659cc.ngrok.com/logout">Logout</a>
+      <a href="http://2f6e6945.ngrok.com/logout">Logout</a>
       </p> 
     </div>
   </div>
@@ -97,7 +97,7 @@
     }
     if (isLoggedIn()) {
       $.ajax({
-        url: "http://hackstream.dev:3000/user/"+$.cookie("access_token"),
+        url: "http://2f6e6945.ngrok.com/user/"+$.cookie("access_token"),
         type: 'GET',
         dataType: 'json',
         crossDomain: true,
