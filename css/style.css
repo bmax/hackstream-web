@@ -44,12 +44,13 @@ h3 {
   height:30px;
   width:30px;
   padding-right:5px;
+  float: left;
 }
 .userPic {
   border-radius:50%;
 }
 .activity p {
-  display:inline;
+  /*display:inline;*/
 }
 .activity {
   width: 60%;
@@ -84,7 +85,6 @@ h3 {
 }
 p.relTime {
  position: absolute;
-top: 35px;
 left: 82px;
 font-size: .55em;
 color: rgb(147, 147, 147);
@@ -160,4 +160,9 @@ margin: 3px 0px;
 }
 .commitLink {
 	cursor:pointer;
+}
+.postText {
+width: 93%;
+margin: 0;
+display: inline-block;
 }
