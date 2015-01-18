@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <head>
   <meta charset="utf-8">
   <title>HackStream</title>
@@ -14,7 +13,7 @@
     <a id="header" href="/hackstream-web"><img src="images/logo.jpg" alt="Logo" style="height:40px;vertical-align:bottom;"/><h1>HackStream</h1></a>
     <div id="navright">
       <a class="navlink" href="map.html">Map</a>
-      <a class="navlink" id="login" href="https://hidden-cove-2579.herokuapp.com/login">Login</a>
+      <a class="navlink" id="login" href="https://4f1659cc.ngrok.com/login">Login</a>
       <p id="loggedin" style="display:none;">
       <a class="navlink" id="logout" href="">Logout</a>
       <img src="" width="40" height="40" alt="Avatar" id="avatarLoggedIn"/>	
@@ -37,7 +36,7 @@
 <script src="js/jquery.cookie.js">
 </script>
 <script>
-  var ServerURL = "http://hidden-cove-2579.herokuapp.com";
+  var ServerURL = "http://4f1659cc.ngrok.com";
   var host = ServerURL.replace(/^http/, 'ws')
   // if user is running mozilla then use it's built-in WebSocket
   window.WebSocket = window.WebSocket || window.MozWebSocket;
