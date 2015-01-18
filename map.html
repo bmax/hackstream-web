@@ -10,7 +10,19 @@
 	<link rel="stylesheet" href="css/locations.css">
 </head>
 <body>
-	<?php include "nav.php";?>
+  <div class="nav">
+    <a id="header" href="/"><h1>HackStream</h1></a>
+    <div id="navright">
+      <a class="navlink" href="map.php">Map</a>
+      <p id="login">     
+      <a class="navlink" href="http://4f1659cc.ngrok.com/login">Login</a>
+      </p>
+      <p id="loggedin" style="Display:none;">
+      <img src="" width="50" height="50" alt="Avatar" id="avatarLoggedIn"/>
+      <a href="http://4f1659cc.ngrok.com/logout">Logout</a>
+      </p> 
+    </div>
+  </div>
 	<div class="content_wrap" style="text-align:center;">
 	<div id="map">
 		<img src="images/map.png">	

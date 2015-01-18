@@ -1,70 +1,115 @@
 <!DOCTYPE html>
 
 <head>
-	<meta charset="utf-8">
-	<title>HackStream</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css" >
-	<link rel="stylesheet" href="css/style.css">
-	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="jquery-ui/jquery-ui.css">
+  <meta charset="utf-8">
+  <title>HackStream</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css" >
+  <link rel="stylesheet" href="css/style.css">
+  <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="jquery-ui/jquery-ui.css">
 </head>
 <body>
-	<?php include "nav.php";?>
-	<div class="content_wrap">
+  <div class="nav">
+    <a id="header" href="/"><h1>HackStream</h1></a>
+    <div id="navright">
+      <a class="navlink" href="map.php">Map</a>
+      <p id="login">     
+      <a class="navlink" href="http://4f1659cc.ngrok.com/login">Login</a>
+      </p>
+      <p id="loggedin" style="Display:none;">
+      <img src="" width="50" height="50" alt="Avatar" id="avatarLoggedIn"/>
+      <a href="http://4f1659cc.ngrok.com/logout">Logout</a>
+      </p> 
+    </div>
+  </div>
+  <div class="content_wrap">
     <h3>Live activity from MHacks V</h3>
-<div id="viewmoreText" class="activity">4 New Activities</div>
-<div id="viewmoreContent">
-<?php for($i=0;$i<5;$i++) { ?>
-	<div class="activity">
-		<div class="logo git">
-			<img src="images/github.png" class="icon">
-		</div>
-		<div class="text">
-		<img src="images/gitPic.jpg" class="icon userPic">
-		<p><a href="">john3123</a> pushed to <a href="">mhacks-web: </a>  Lorem Ipsum Github dipsum</p>
-		<p class="relTime">45 min ago</p>
-		
-	</div>
-	<div class="votes">
-			<img src="images/up.png">
-			<p class="votesCount">0</p>
-			<img src="images/down.png">
-		</div>
-	</div>
-	<?php } ?>
-</div>
-	<div class="activity">
-		<div class="logo git">
-			<img src="images/github.png" class="icon">
-		</div>
-		<div class="text">
-		<img src="images/gitPic.jpg" class="icon userPic">
-		<p><a href="">john3123</a> pushed to <a href="">mhacks-web: </a>  Lorem Ipsum Github dipsum</p>
-		<p class="relTime">45 min ago</p>
-		
-	</div>
-	<div class="votes">
-			<img src="images/up.png">
-			<p class="votesCount">0</p>
-			<img src="images/down.png">
-		</div>
-	</div>
-</div>
+    <div id="viewmoreText" class="activity">4 New Activities</div>
+    <div id="viewmoreContent">
+      <div class="activity">
+        <div class="logo git">
+          <img src="images/github.png" class="icon">
+        </div>
+        <div class="text">
+          <img src="images/gitPic.jpg" class="icon userPic">
+          <p><a href="">john3123</a> pushed to <a href="">mhacks-web: </a>  Lorem Ipsum Github dipsum</p>
+          <p class="relTime">45 min ago</p>
+
+        </div>
+        <div class="votes">
+          <img src="images/up.png">
+          <p class="votesCount">0</p>
+          <img src="images/down.png">
+        </div>
+      </div>
+    </div>
+    <div class="activity">
+      <div class="logo git">
+        <img src="images/github.png" class="icon">
+      </div>
+      <div class="text">
+        <img src="images/gitPic.jpg" class="icon userPic">
+        <p><a href="">john3123</a> pushed to <a href="">mhacks-web: </a>  Lorem Ipsum Github dipsum</p>
+        <p class="relTime">45 min ago</p>
+
+      </div>
+      <div class="votes">
+        <img src="images/up.png">
+        <p class="votesCount">0</p>
+        <img src="images/down.png">
+      </div>
+    </div>
+  </div>
 </body>
-</html>
 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script src="jquery-ui/jquery-ui.min.js"></script>
-<script>
-$(document).ready( function() {
-	setTimeout(function(){
-		$("#viewmoreText").slideDown(200);
-	},2000);
-});
-
-$("#viewmoreText").click(function(event) {
-	$("#viewmoreText").hide();
-	$("#viewmoreContent").slideDown(600);
-	$("#viewmoreContent .activity").effect("highlight",3000);
-});
-
+<script src="js/jquery.cookie.js">
 </script>
+<script>
+  function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+  }
+  function isLoggedIn() {
+    return $.cookie("access_token");
+  }
+  $(document).ready(function() {
+    setTimeout(function(){
+      $("#viewmoreText").slideDown(200);
+    },2000);
+  });
+
+  $("#viewmoreText").click(function(event) {
+    $("#viewmoreText").hide();
+    $("#viewmoreContent").slideDown(600);
+    $("#viewmoreContent .activity").effect("highlight",3000);
+  });
+
+    var a_t = getParameterByName("access_token")
+    var logout = getParameterByName("logout")
+    if (logout && $.cookie("access_token")) {
+      $.removeCookie("access_token");
+    }
+    if (a_t && !$.cookie("access_token")) {
+      $.cookie("access_token", a_t);
+    }
+    if (isLoggedIn()) {
+      $.ajax({
+        url: "http://hackstream.dev:3000/user/"+$.cookie("access_token"),
+        type: 'GET',
+        dataType: 'json',
+        crossDomain: true,
+        success: function(data) { 
+          console.log(data);
+          $("#login").hide();
+          $("#loggedin").show();
+          $("#avatarLoggedIn").attr('src', data.avatar_url);
+        },
+        error: function(e) { console.log('Failed!'); console.log(e); }
+      });
+    }
+  });
+</script>
+</html>
