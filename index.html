@@ -11,12 +11,12 @@
 <body>
 
   <div class="nav">
-    <a id="header" href="/"><h1>HackStream</h1></a>
+    <a id="header" href="/hackstream-web"><img src="images/logo.jpg" alt="Logo" style="height:40px;vertical-align:bottom;"/><h1>HackStream</h1></a>
     <div id="navright">
       <a class="navlink" href="map.html">Map</a>
       <a class="navlink" id="login" href="https://hidden-cove-2579.herokuapp.com/login">Login</a>
       <p id="loggedin" style="display:none;">
-      <a class="navlink" href="https://hidden-cove-2579.herokuapp.com/logout">Logout</a>
+      <a class="navlink" id="logout" href="">Logout</a>
       <img src="" width="40" height="40" alt="Avatar" id="avatarLoggedIn"/>	
       </p> 
     </div>
@@ -37,99 +37,161 @@
 <script src="js/jquery.cookie.js">
 </script>
 <script>
-  var ServerURL = "https://hidden-cove-2579.herokuapp.com";
-  function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-    results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+  var ServerURL = "http://hidden-cove-2579.herokuapp.com";
+  var host = ServerURL.replace(/^http/, 'ws')
+  // if user is running mozilla then use it's built-in WebSocket
+  window.WebSocket = window.WebSocket || window.MozWebSocket;
+  var content = $('#viewMoreContent');
+
+  // if browser doesn't support WebSocket, just show some notification and exit
+  if (!window.WebSocket) {
+    content.html($('<p>', { text: 'Sorry, but your browser doesn\'t '
+      + 'support WebSockets.'} ));
   }
-  function isLoggedIn() {
-    return $.cookie("access_token");
-  }
-  $(document).ready(function() {
-    // setTimeout(function(){
-    //   $("#viewmoreText").slideDown(200);
-    // },2000);
-  });
 
-  $("#viewmoreText").click(function(event) {
-    $("#viewmoreText").hide();
-    $("#viewmoreContent").slideDown(600);
-    $("#viewmoreContent .activity").effect(	"highlight",3000);
-  });
+  var  connection = new WebSocket(host);
+  connection.onerror = function (error) {
+    // just in there were some problems with conenction...
+    content.html($('<p>', { text: 'Sorry, but there\'s some problem with your '
+      + 'connection or the server is down.' } ));
+  };
 
-    var a_t = getParameterByName("access_token")
-    var logout = getParameterByName("logout")
-    if (logout && $.cookie("access_token")) {
-      $.removeCookie("access_token");
+  // most important part - incoming messages
+  connection.onmessage = function (message) {
+    if (message.data)
+    {
+      var postData = $.parseJSON(message.data);
+      var tmpTime = new Date();
+      var currentTimeMillis = tmpTime.getTime();
+      var postTime = new Date(postData.time);
+      var relativeUnixTime = new Date(currentTimeMillis - postData.time);
+      var relTimeForHtml = relativeUnixTime.getMinutes().toString()+" minutes ago";
+      if(relativeUnixTime.getMinutes()>60) {
+        var relTimeForHtml = relativeUnixTime.getHours().toString()+" hours ago";
+      }
+      postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: '+postData.messages[0]+'</p><div class="smallPostText"><p class="relTime">'+relTimeForHtml+' </p> <a href="'+postData.commit_urls[0]+'">commit</a></div><div class="votes"><img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>';
+        $("#allPosts").prepend(postHTML);
+      }
+    };
+    function getParameterByName(name) {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+      results = regex.exec(location.search);
+      return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
-    if (a_t && !$.cookie("access_token")) {
-      $.cookie("access_token", a_t);
-    }
-    if (isLoggedIn()) {
+      function isLoggedIn() {
+        return $.cookie("access_token");
+      }
+      var access_token = getParameterByName("access_token");
+      if (access_token && !$.cookie("access_token")) {
+        $.cookie("access_token", access_token);
+        window.location.replace(window.location.protocol+"//bmax.github.io/hackstream-web/");
+      }
+      var addHeaders = function(xhr) {
+        var restAuthHeader = $.cookie("access_token");
+        if (restAuthHeader != null) {
+          xhr.setRequestHeader("authorization", restAuthHeader);
+        }
+      };
 
-      $.ajax({
-        url: ServerURL+"/user/"+$.cookie("access_token"),
-        type: 'GET',
-        dataType: 'json',
-        crossDomain: true,
-        success: function(data) { 
-          console.log(data);
-          $("#login").hide();
-          $("#loggedin").show();
-          $("#navright").css("display","inline-block");	
-          $("#avatarLoggedIn").attr('src', data.avatar_url);
-        },
-        error: function(e) { console.log('Failed!'); console.log(e); }
+      // setTimeout(function(){
+        //   $("#viewmoreText").slideDown(200);
+        // },2000);
+      jQuery.ajaxPrefilter(function( options, originalOptions, xhr ) {
+        if ( !options.beforeSend) {
+          options.beforeSend = addHeaders 
+        }
       });
-    }
-    else {
-    	$("#navright").css("display","inline-block");	
-    }
-  	$.ajax({
-  		url:ServerURL+"/posts",
-  		type: "GET",
-  		dataType: "json",
-  		crossDomain: true,
-  		success: function(data) {
-  			console.log(data);
-  			for(var j=data.length-1; j>=0;j--) {
-  				var postData = data[j]
-  				console.log(postData);
-  				
-  				var tmpTime = new Date();
-				var currentTimeMillis = tmpTime.getTime();
-				var postTime = new Date(postData.time);
-				var relativeUnixTime = new Date(currentTimeMillis - postData.time);
-				var relTimeForHtml = relativeUnixTime.getMinutes().toString()+" minutes ago";
-				if(relativeUnixTime.getMinutes()>60) {
-					var relTimeForHtml = relativeUnixTime.getHours().toString()+" hours ago";
-				}
-				//if only one commit
-  				if(postData.messages.length==1) {
-  					var postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: '+postData.messages[0]+'</p><div class="smallPostText"><p class="relTime">'+relTimeForHtml+' </p> <a href="'+postData.commit_urls[0]+'">commit</a></div><div class="votes"><img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>';
-  				}
-  				//multiple commits in this push
-  				else {
-  					var num_posts = postData.messages.length;
-  					var id = postData._id;
-  					var extraCommits = "<div id='extra_"+id+"' class='extraCommits'><ul>";
-  					for(var i=0; i<num_posts;i++) {
-  						extraCommits+="<li><a href='"+postData.commit_urls[i]+"'>commit</a> "+postData.messages[i]+"</li>";
-  					}
-  					extraCommits+="</ul></div>";
-  					var postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: <a class="commitLink" title="Click to Expand" onclick="$(extra_'+id+').slideToggle(500); return false;">'+num_posts+' commits</a><div class="smallPostText"><p class="relTime">'+relTimeForHtml+'</p></div></p></div><div class="votes">\<img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>'+extraCommits+'</div>';
-  				}
-  				
-				$("#allPosts").append(postHTML);
+      jQuery.ajaxSetup({
+        beforeSend: addHeaders
+      });
+    $(document).ready(function() {
 
+      jQuery.ajaxPrefilter(function( options, originalOptions, xhr ) {
+        if ( !options.beforeSend) {
+          options.beforeSend = addHeaders 
+        }
+      });
+      jQuery.ajaxSetup({
+        beforeSend: addHeaders
+      });
 
-  			}
-  		},
-  		error: function(er) {
-  			console.log(er);
-  		}
-  	});
-</script>
+      $("#viewmoreText").click(function(event) {
+        $("#viewmoreText").hide();
+        $("#viewmoreContent").slideDown(600);
+        $("#viewmoreContent .activity").effect(	"highlight",3000);
+      });
+
+      if (isLoggedIn()) {
+        $.ajax({
+          url: ServerURL+"/user",
+          type: 'GET',
+          dataType: 'json',
+          crossDomain: true,
+          success: function(data) { 
+            $("#login").hide();
+            $("#loggedin").show();
+            $("#navright").css("display","inline-block");	
+            $("#avatarLoggedIn").attr('src', data.avatar_url);
+          },
+          error: function(e) { console.log('Failed!'); console.log(e); }
+        });
+      }
+      else {
+        $("#navright").css("display","inline-block");	
+      }
+      $("#logout").click(function (e) {
+        e.preventDefault();
+        $.ajax({
+          url:ServerURL+"/logout",
+          type: "GET",
+          dataType: "json",
+          crossDomain: true
+        });
+        $.removeCookie("access_token");
+        $("#login").show();
+        $("#loggedin").hide();
+        $("#navright").css("display","inline-block");	
+      });
+      $.ajax({
+        url:ServerURL+"/posts",
+        type: "GET",
+        dataType: "json",
+        crossDomain: true,
+        success: function(data) {
+          for(var j=data.length-1; j>=0;j--) {
+            var postData = data[j]
+            var postHTML = "";
+            var tmpTime = new Date();
+            var currentTimeMillis = tmpTime.getTime();
+            var postTime = new Date(postData.time);
+            var relativeUnixTime = new Date(currentTimeMillis - postData.time);
+            var relTimeForHtml = relativeUnixTime.getMinutes().toString()+" minutes ago";
+            if(relativeUnixTime.getMinutes()>60) {
+              var relTimeForHtml = relativeUnixTime.getHours().toString()+" hours ago";
+            }
+            //if only one commit
+            if(postData.messages.length==1) {
+              postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: '+postData.messages[0]+'</p><div class="smallPostText"><p class="relTime">'+relTimeForHtml+' </p> <a href="'+postData.commit_urls[0]+'">commit</a></div><div class="votes"><img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>';
+              }
+              //multiple commits in this push
+              else {
+                var num_posts = postData.messages.length;
+                var id = postData._id;
+                var extraCommits = "<div id='extra_"+id+"' class='extraCommits'><ul>";
+                    for(var i=0; i<num_posts;i++) {
+                      extraCommits+="<li><a href='"+postData.commit_urls[i]+"'>commit</a> "+postData.messages[i]+"</li>";
+                    }
+                    extraCommits+="</ul></div>";
+                postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: <a class="commitLink" onclick="$(extra_'+id+').slideToggle(500); return false;">'+num_posts+' commits</a><div class="smallPostText"><p class="relTime">'+relTimeForHtml+'</p></div></p></div><div class="votes">\<img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>'+extraCommits+'</div>';
+              }
+              $("#allPosts").append(postHTML);
+            }
+          },
+          error: function(er) {
+            console.log("error" + er);
+          }
+        });
+      });
+  </script>
 </html>
