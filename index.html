@@ -85,8 +85,7 @@
       var access_token = getParameterByName("access_token");
       if (access_token && !$.cookie("access_token")) {
         $.cookie("access_token", access_token);
-        console.log(location.protocol + '//' + location.host + location.pathname);
-        window.location.replace(window.location.protocol+"//"+window.location.host + window.location.pathname);
+        window.location.replace(window.location.protocol+"//bmax.github.io/hackstream-web/");
       }
       var addHeaders = function(xhr) {
         var restAuthHeader = $.cookie("access_token");
