@@ -47,7 +47,10 @@ h3 {
   float: left;
 }
 .userPic {
-  border-radius:50%;
+  border-radius: 50%;
+position: absolute;
+top: calc(50% - 27px);
+/* padding: 0 5px; */
 }
 .activity p {
   /*display:inline;*/
@@ -75,7 +78,8 @@ h3 {
 }
 .activity .text {
   padding: 16px;
-  width:90%;
+  padding-left:0;
+  width:100%;
 }
 .twit {
   background-color: #55acee;
@@ -84,11 +88,9 @@ h3 {
   background-color: #333;
 }
 p.relTime {
- position: absolute;
-left: 82px;
-font-size: .55em;
-color: rgb(147, 147, 147);
-}
+ color: rgb(147, 147, 147);
+display: inline-block;
+margin: 0;
 }
 #more {
   width: 24px;
@@ -165,4 +167,16 @@ margin: 3px 0px;
 width: 93%;
 margin: 0;
 display: inline-block;
+}
+.smallPostText {
+	position: relative;
+font-size: .6em;
+/*left: 35px;*/
+}
+.iconwrap {
+	display: table-cell;
+height: 100%;
+width: 31px;
+position: relative;
+padding: 0 11px;
 }
