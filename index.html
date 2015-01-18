@@ -12,10 +12,10 @@
   <div class="nav">
     <a id="header" href="/"><h1>HackStream</h1></a>
     <div id="navright">
-      <a class="navlink" href="map.php">Map</a>
-      <p id="login">     
+      <a class="navlink" href="map.html">Map</a>
+       <p id="login">   
       <a class="navlink" href="http://4f1659cc.ngrok.com/login">Login</a>
-      </p>
+      </p> 
       <p id="loggedin" style="Display:none;">
       <img src="" width="50" height="50" alt="Avatar" id="avatarLoggedIn"/>
       <a href="http://4f1659cc.ngrok.com/logout">Logout</a>
@@ -81,11 +81,11 @@
       $("#viewmoreText").slideDown(200);
     },2000);
 
-  $("#viewmoreText").click(function(event) {
-    $("#viewmoreText").hide();
-    $("#viewmoreContent").slideDown(600);
-    $("#viewmoreContent .activity").effect("highlight",3000);
-  });
+    $("#viewmoreText").click(function(event) {
+      $("#viewmoreText").hide();
+      $("#viewmoreContent").slideDown(600);
+      $("#viewmoreContent .activity").effect("highlight",3000);
+    });
 
     var a_t = getParameterByName("access_token")
     var logout = getParameterByName("logout")
@@ -97,14 +97,14 @@
     }
     if (isLoggedIn()) {
       $.ajax({
-        url: "http://"+ServerURL+"/"+$.cookie("access_token"),
+        url: ServerURL+"/user/"+$.cookie("access_token"),
         type: 'GET',
         dataType: 'json',
         crossDomain: true,
         success: function(data) { 
           console.log(data);
           $("#login").hide();
-          $("#loggedin").show();
+          $("#loggedin").css("display", "inline-block");
           $("#avatarLoggedIn").attr('src', data.avatar_url);
         },
         error: function(e) { console.log('Failed!'); console.log(e); }
