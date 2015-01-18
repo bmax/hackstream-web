@@ -60,131 +60,130 @@
   connection.onmessage = function (message) {
     if (message.data)
     {
-     var postData = $.parseJSON(message.data);
-          var tmpTime = new Date();
-          var currentTimeMillis = tmpTime.getTime();
-          var postTime = new Date(postData.time);
-          var relativeUnixTime = new Date(currentTimeMillis - postData.time);
-          var relTimeForHtml = relativeUnixTime.getMinutes().toString()+" minutes ago";
-          if(relativeUnixTime.getMinutes()>60) {
-            var relTimeForHtml = relativeUnixTime.getHours().toString()+" hours ago";
-          }
+      var postData = $.parseJSON(message.data);
+      var tmpTime = new Date();
+      var currentTimeMillis = tmpTime.getTime();
+      var postTime = new Date(postData.time);
+      var relativeUnixTime = new Date(currentTimeMillis - postData.time);
+      var relTimeForHtml = relativeUnixTime.getMinutes().toString()+" minutes ago";
+      if(relativeUnixTime.getMinutes()>60) {
+        var relTimeForHtml = relativeUnixTime.getHours().toString()+" hours ago";
+      }
       postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: '+postData.messages[0]+'</p><div class="smallPostText"><p class="relTime">'+relTimeForHtml+' </p> <a href="'+postData.commit_urls[0]+'">commit</a></div><div class="votes"><img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>';
         $("#allPosts").prepend(postHTML);
-    }
-  };
-  function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-    results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-  }
-  $(document).ready(function() {
-  function isLoggedIn() {
-    return $.cookie("access_token");
-  }
-  var access_token = getParameterByName("access_token");
-  if (access_token && !$.cookie("access_token")) {
-    $.cookie("access_token", access_token);
-    window.location.replace(window.location.protocol+"//"+window.location.host);
-  }
-    var addHeaders = function(xhr) {
-      var restAuthHeader = $.cookie("access_token");
-      if (restAuthHeader != null) {
-        xhr.setRequestHeader("authorization", restAuthHeader);
       }
     };
-
-    // setTimeout(function(){
-      //   $("#viewmoreText").slideDown(200);
-      // },2000);
-    jQuery.ajaxPrefilter(function( options, originalOptions, xhr ) {
-      if ( !options.beforeSend) {
-        options.beforeSend = addHeaders 
+    function getParameterByName(name) {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+      results = regex.exec(location.search);
+      return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+      function isLoggedIn() {
+        return $.cookie("access_token");
       }
-    });
-    jQuery.ajaxSetup({
-      beforeSend: addHeaders
-    });
+      var access_token = getParameterByName("access_token");
+      if (access_token && !$.cookie("access_token")) {
+        $.cookie("access_token", access_token);
+        window.location.replace(window.location.protocol+"//"+window.location.host);
+      }
+      var addHeaders = function(xhr) {
+        var restAuthHeader = $.cookie("access_token");
+        if (restAuthHeader != null) {
+          xhr.setRequestHeader("authorization", restAuthHeader);
+        }
+      };
 
-
-    $("#viewmoreText").click(function(event) {
-      $("#viewmoreText").hide();
-      $("#viewmoreContent").slideDown(600);
-      $("#viewmoreContent .activity").effect(	"highlight",3000);
-    });
-
-    if (isLoggedIn()) {
-      $.ajax({
-        url: ServerURL+"/user",
-        type: 'GET',
-        dataType: 'json',
-        crossDomain: true,
-        success: function(data) { 
-          console.log(data);
-          $("#login").hide();
-          $("#loggedin").show();
-          $("#navright").css("display","inline-block");	
-          $("#avatarLoggedIn").attr('src', data.avatar_url);
-        },
-        error: function(e) { console.log('Failed!'); console.log(e); }
-      });
-    }
-    else {
-      $("#navright").css("display","inline-block");	
-    }
-    $("#logout").click(function (e) {
-      e.preventDefault();
-      $.ajax({
-        url:ServerURL+"/logout",
-        type: "GET",
-        dataType: "json",
-        crossDomain: true
-      });
-      $.removeCookie("access_token");
-      $("#login").show();
-      $("#loggedin").hide();
-      $("#navright").css("display","inline-block");	
-    });
-    $.ajax({
-      url:ServerURL+"/posts",
-      type: "GET",
-      dataType: "json",
-      crossDomain: true,
-      success: function(data) {
-        for(var j=data.length-1; j>=0;j--) {
-          var postData = data[j]
-          var postHTML = "";
-          var tmpTime = new Date();
-          var currentTimeMillis = tmpTime.getTime();
-          var postTime = new Date(postData.time);
-          var relativeUnixTime = new Date(currentTimeMillis - postData.time);
-          var relTimeForHtml = relativeUnixTime.getMinutes().toString()+" minutes ago";
-          if(relativeUnixTime.getMinutes()>60) {
-            var relTimeForHtml = relativeUnixTime.getHours().toString()+" hours ago";
-          }
-          //if only one commit
-          if(postData.messages.length==1) {
-            postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: '+postData.messages[0]+'</p><div class="smallPostText"><p class="relTime">'+relTimeForHtml+' </p> <a href="'+postData.commit_urls[0]+'">commit</a></div><div class="votes"><img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>';
-            }
-            //multiple commits in this push
-            else {
-              var num_posts = postData.messages.length;
-              var id = postData._id;
-              var extraCommits = "<div id='extra_"+id+"' class='extraCommits'><ul>";
-                  for(var i=0; i<num_posts;i++) {
-                    extraCommits+="<li><a href='"+postData.commit_urls[i]+"'>commit</a> "+postData.messages[i]+"</li>";
-                  }
-                  extraCommits+="</ul></div>";
-              postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: <a class="commitLink" onclick="$(extra_'+id+').slideToggle(500); return false;">'+num_posts+' commits</a><div class="smallPostText"><p class="relTime">'+relTimeForHtml+'</p></div></p></div><div class="votes">\<img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>'+extraCommits+'</div>';
-            }
-            $("#allPosts").append(postHTML);
-          }
-        },
-        error: function(er) {
-          console.log("error" + er);
+      // setTimeout(function(){
+        //   $("#viewmoreText").slideDown(200);
+        // },2000);
+      jQuery.ajaxPrefilter(function( options, originalOptions, xhr ) {
+        if ( !options.beforeSend) {
+          options.beforeSend = addHeaders 
         }
       });
-    });
+      jQuery.ajaxSetup({
+        beforeSend: addHeaders
+      });
+    $(document).ready(function() {
+
+
+      $("#viewmoreText").click(function(event) {
+        $("#viewmoreText").hide();
+        $("#viewmoreContent").slideDown(600);
+        $("#viewmoreContent .activity").effect(	"highlight",3000);
+      });
+
+      if (isLoggedIn()) {
+        $.ajax({
+          url: ServerURL+"/user",
+          type: 'GET',
+          dataType: 'json',
+          crossDomain: true,
+          success: function(data) { 
+            $("#login").hide();
+            $("#loggedin").show();
+            $("#navright").css("display","inline-block");	
+            $("#avatarLoggedIn").attr('src', data.avatar_url);
+          },
+          error: function(e) { console.log('Failed!'); console.log(e); }
+        });
+      }
+      else {
+        $("#navright").css("display","inline-block");	
+      }
+      $("#logout").click(function (e) {
+        e.preventDefault();
+        $.ajax({
+          url:ServerURL+"/logout",
+          type: "GET",
+          dataType: "json",
+          crossDomain: true
+        });
+        $.removeCookie("access_token");
+        $("#login").show();
+        $("#loggedin").hide();
+        $("#navright").css("display","inline-block");	
+      });
+      $.ajax({
+        url:ServerURL+"/posts",
+        type: "GET",
+        dataType: "json",
+        crossDomain: true,
+        success: function(data) {
+          for(var j=data.length-1; j>=0;j--) {
+            var postData = data[j]
+            var postHTML = "";
+            var tmpTime = new Date();
+            var currentTimeMillis = tmpTime.getTime();
+            var postTime = new Date(postData.time);
+            var relativeUnixTime = new Date(currentTimeMillis - postData.time);
+            var relTimeForHtml = relativeUnixTime.getMinutes().toString()+" minutes ago";
+            if(relativeUnixTime.getMinutes()>60) {
+              var relTimeForHtml = relativeUnixTime.getHours().toString()+" hours ago";
+            }
+            //if only one commit
+            if(postData.messages.length==1) {
+              postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: '+postData.messages[0]+'</p><div class="smallPostText"><p class="relTime">'+relTimeForHtml+' </p> <a href="'+postData.commit_urls[0]+'">commit</a></div><div class="votes"><img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>';
+              }
+              //multiple commits in this push
+              else {
+                var num_posts = postData.messages.length;
+                var id = postData._id;
+                var extraCommits = "<div id='extra_"+id+"' class='extraCommits'><ul>";
+                    for(var i=0; i<num_posts;i++) {
+                      extraCommits+="<li><a href='"+postData.commit_urls[i]+"'>commit</a> "+postData.messages[i]+"</li>";
+                    }
+                    extraCommits+="</ul></div>";
+                postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="iconwrap"><img src="'+postData.image_url+'" class="icon userPic"></div><div><div class="text"><p class="postText"><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">'+postData.repo_name+'</a>: <a class="commitLink" onclick="$(extra_'+id+').slideToggle(500); return false;">'+num_posts+' commits</a><div class="smallPostText"><p class="relTime">'+relTimeForHtml+'</p></div></p></div><div class="votes">\<img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>'+extraCommits+'</div>';
+              }
+              $("#allPosts").append(postHTML);
+            }
+          },
+          error: function(er) {
+            console.log("error" + er);
+          }
+        });
+      });
   </script>
 </html>
