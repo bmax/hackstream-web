@@ -9,54 +9,27 @@
   <link rel="stylesheet" href="jquery-ui/jquery-ui.css">
 </head>
 <body>
+
   <div class="nav">
     <a id="header" href="/"><h1>HackStream</h1></a>
     <div id="navright">
       <a class="navlink" href="map.html">Map</a>
-      <a class="navlink" id="login" href="http://2f6e6945.ngrok.com/login">Login</a>
+      <a class="navlink" id="login" href="http://4f1659cc.ngrok.com/login">Login</a>
       <p id="loggedin" style="display:none;">
-      <a class="navlink" href="http://2f6e6945.ngrok.com/logout">Logout</a>
+      <a class="navlink" href="http://4f1659cc.ngrok.com/logout">Logout</a>
       <img src="" width="40" height="40" alt="Avatar" id="avatarLoggedIn"/>	
       </p> 
     </div>
   </div>
+
   <div class="content_wrap">
     <h3>Live activity from MHacks V</h3>
-    <div id="viewmoreText" class="activity">4 New Activities</div>
+    <div id="viewmoreText" class="activity"></div>
     <div id="viewmoreContent">
-      <div class="activity">
-        <div class="logo git">
-          <img src="images/github.png" class="icon">
-        </div>
-        <div class="text">
-          <img src="images/gitPic.jpg" class="icon userPic">
-          <p><a href="">john3123</a> pushed to <a href="">mhacks-web: </a>  Lorem Ipsum Github dipsum</p>
-          <p class="relTime">45 min ago</p>
 
-        </div>
-        <div class="votes">
-          <img src="images/up.png">
-          <p class="votesCount">0</p>
-          <img src="images/down.png">
-        </div>
-      </div>
     </div>
-    <div class="activity">
-      <div class="logo git">
-        <img src="images/github.png" class="icon">
-      </div>
-      <div class="text">
-        <img src="images/gitPic.jpg" class="icon userPic">
-        <p><a href="">john3123</a> pushed to <a href="">mhacks-web: </a>  Lorem Ipsum Github dipsum</p>
-        <p class="relTime">45 min ago</p>
+    <div id="allPosts"></div>
 
-      </div>
-      <div class="votes">
-        <img src="images/up.png">
-        <p class="votesCount">0</p>
-        <img src="images/down.png">
-      </div>
-    </div>
   </div>
 </body>
 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
@@ -64,7 +37,7 @@
 <script src="js/jquery.cookie.js">
 </script>
 <script>
-  var ServerURL = "http://2f6e6945.ngrok.com";
+  var ServerURL = "http://4f1659cc.ngrok.com";
   function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -75,9 +48,9 @@
     return $.cookie("access_token");
   }
   $(document).ready(function() {
-    setTimeout(function(){
-      $("#viewmoreText").slideDown(200);
-    },2000);
+    // setTimeout(function(){
+    //   $("#viewmoreText").slideDown(200);
+    // },2000);
   });
 
   $("#viewmoreText").click(function(event) {
@@ -121,6 +94,14 @@
   		crossDomain: true,
   		success: function(data) {
   			console.log(data);
+  			for(post in data) {
+  				var postData = data[post]
+  				console.log(postData);
+  				var postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="text"><img src="images/gitPic.jpg" class="icon userPic"><p><a href="">'+postData.user+'</a> pushed to <a href="'+postData.url+'">mhacks-web: </a>'+postData.messages[0]+'</p><p class="relTime">45 min ago</p></div><div class="votes">\<img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>';
+				$("#allPosts").append(postHTML);
+
+
+  			}
   		},
   		error: function(er) {
   			console.log(er);
