@@ -16,6 +16,22 @@ top: 0;
 .nav h1 {
 	margin:0;
 	display:inline-block;
+	width:25%;
+}
+#navright {
+	display: inline-block;
+width: 70%;
+text-align: right;
+}
+.navlink {
+	padding:10px;
+	border-radius:3px;
+	font-size:1.4em;
+}
+.navlink:hover, .navlink:focus {
+	color: #fff;
+background: #08c;
+text-decoration: none;
 }
 #header, #header:hover {
 	color:#333;
@@ -113,7 +129,7 @@ bottom: 0px;
 }
 .votesCount {
 	position: absolute;
-top: 21px;
+top: calc( 50% - 10px );
 text-align: center;
 width: 23px;
 }

@@ -71,11 +71,59 @@ div#swartz {
 	bottom: 22%;
 	right: 86%;
 }
+div#lovelace {
+height: 5%;
+width: 6.5%;
+bottom: 84.5%;
+right: 48.5%;
+}
+div#torvalds {
+height: 5.5%;
+width: 6.5%;
+bottom: 79%;
+right: 48.5%;
+}
+div#web_dev {
+height: 6.5%;
+width: 8%;
+bottom: 73%;
+right: 47%;
+}
+div#hardware {
+height: 6%;
+width: 8%;
+bottom: 62%;
+right: 47%;
+}
+div#gates {
+height: 4.5%;
+width: 6%;
+bottom: 80.5%;
+right: 39%;
+}
+div#design {
+height: 4%;
+width: 6%;
+bottom: 76.5%;
+right: 39%;
+}
+div#ar {
+height: 6%;
+width: 8%;
+bottom: 62%;
+right: 39%;
+}
+div#android {
+height: 5.5%;
+width: 9%;
+bottom: 47%;
+right: 48%;
+}
 #map {
 	position:relative;
 	display:inline-block;
 }
 #init {
 	width: 100%;
-	background: black;
+	background: #333;
 }
