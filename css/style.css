@@ -22,6 +22,8 @@ top: 0;
 	display: inline-block;
 width: 70%;
 text-align: right;
+display:none;
+
 }
 .navlink {
 	padding:10px;
@@ -38,12 +40,6 @@ text-decoration: none;
 }
 h3 {
 	text-align: center;
-}
-.nav #login {
-	position: absolute;
-top: 33px;
-right: 30px;
-font-size: 1.3em;
 }
 .icon {
 	height:30px;
@@ -135,4 +131,12 @@ width: 23px;
 }
 .content_wrap {
 	padding-top:71px;	
+}
+#loggedin {
+	margin:0;
+	display:inline-block;
+}
+img#avatarLoggedIn {
+border-radius: 3px;
+margin: -9px 0 0 5px;
 }

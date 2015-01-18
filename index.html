@@ -13,12 +13,10 @@
     <a id="header" href="/"><h1>HackStream</h1></a>
     <div id="navright">
       <a class="navlink" href="map.html">Map</a>
-      <!-- <p id="login">      -->
-      <a class="navlink" href="http://2f6e6945.ngrok.com/login">Login</a>
-      <!-- </p> -->
-      <p id="loggedin" style="Display:none;">
-      <img src="" width="50" height="50" alt="Avatar" id="avatarLoggedIn"/>
-      <a href="http://2f6e6945.ngrok.com/logout">Logout</a>
+      <a class="navlink" id="login" href="http://2f6e6945.ngrok.com/login">Login</a>
+      <p id="loggedin" style="display:none;">
+      <a class="navlink" href="http://2f6e6945.ngrok.com/logout">Logout</a>
+      <img src="" width="40" height="40" alt="Avatar" id="avatarLoggedIn"/>
       </p> 
     </div>
   </div>
@@ -84,7 +82,7 @@
   $("#viewmoreText").click(function(event) {
     $("#viewmoreText").hide();
     $("#viewmoreContent").slideDown(600);
-    $("#viewmoreContent .activity").effect("highlight",3000);
+    $("#viewmoreContent .activity").effect(	"highlight",3000);
   });
 
     var a_t = getParameterByName("access_token")
@@ -96,6 +94,7 @@
       $.cookie("access_token", a_t);
     }
     if (isLoggedIn()) {
+
       $.ajax({
         url: "http://2f6e6945.ngrok.com/user/"+$.cookie("access_token"),
         type: 'GET',
@@ -105,11 +104,15 @@
           console.log(data);
           $("#login").hide();
           $("#loggedin").show();
+          $("#navright").css("display","inline-block");	
           $("#avatarLoggedIn").attr('src', data.avatar_url);
         },
         error: function(e) { console.log('Failed!'); console.log(e); }
       });
     }
-  });
+    else {
+    	$("#navright").css("display","inline-block");	
+    }
+  
 </script>
 </html>
