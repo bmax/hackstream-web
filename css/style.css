@@ -43,6 +43,7 @@ h3 {
 .icon {
   height:30px;
   width:30px;
+  padding-right:5px;
 }
 .userPic {
   border-radius:50%;
@@ -73,6 +74,7 @@ h3 {
 }
 .activity .text {
   padding: 16px;
+  width:90%;
 }
 .twit {
   background-color: #55acee;
@@ -81,11 +83,12 @@ h3 {
   background-color: #333;
 }
 p.relTime {
-  position: absolute;
-  bottom: -4px;
-  left: 82px;
-  font-size: .55em;
-  color: rgb(147, 147, 147);
+ position: absolute;
+top: 35px;
+left: 82px;
+font-size: .55em;
+color: rgb(147, 147, 147);
+}
 }
 #more {
   width: 24px;
@@ -106,10 +109,10 @@ p.relTime {
 }
 .votes {
   display: table-cell;
-  height: 100%;
-  width: 31px;
-  position: relative;
-  top: 0;
+height: 100%;
+width: 31px;
+float: right;
+top: 0;
 }
 .votes img {
   position:absolute;
@@ -141,9 +144,20 @@ margin: -9px 0 0 5px;
 .extraCommits {
 	display: inline-block;
 font-size: .7em;
-position: absolute;
-border: 1px solid rgba(232, 232, 232, 1);
-padding: 10px;
 z-index: 5;
 background: white;
+display:none;
+}
+.extraCommits ul {
+	margin: 0px;
+list-style: none;
+}
+.extraCommits ul li {
+	line-height: 20px;
+border-left: 2px solid #08c;
+padding-left: 5px;
+margin: 3px 0px;
+}
+.commitLink {
+	cursor:pointer;
 }

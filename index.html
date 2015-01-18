@@ -97,17 +97,26 @@
   			for(post in data) {
   				var postData = data[post]
   				console.log(postData);
+  				
+  				var tmpTime = new Date();
+				var currentTimeMillis = tmpTime.getTime();
+
+				var relativeTime = new Date(currentTimeMillis - postData.time);
+				var relMinutes = "0" + relativeTime.getMinutes();
+				console.log(parseInt(postData.time));
+
   				if(postData.messages.length==1) {
-  					var postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="text"><img src="images/gitPic.jpg" class="icon userPic"><p><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">mhacks-web: </a>'+postData.messages[0]+'</p><p class="relTime">45 min ago</p></div><div class="votes">\<img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>';
+  					var postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="text"><img src="images/gitPic.jpg" class="icon userPic"><p><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">mhacks-web</a>: '+postData.messages[0]+'<p class="relTime">45 min ago</p></p></div><div class="votes">\<img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>';
   				}
   				else {
   					var num_posts = postData.messages.length;
-  					var extraCommits = "<div class=extraCommits><ul>";
+  					var id = postData._id;
+  					var extraCommits = "<div id='extra_"+id+"' class='extraCommits'><ul>";
   					for(var i=0; i<num_posts;i++) {
   						extraCommits+="<li>"+postData.messages[i]+"</li>";
   					}
   					extraCommits+="</ul></div>";
-  					var postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div class="text"><img src="images/gitPic.jpg" class="icon userPic"><p><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">mhacks-web: </a><a id="" href="">'+num_posts+' commits</a></p>'+extraCommits+'<p class="relTime">45 min ago</p></div><div class="votes">\<img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>';
+  					var postHTML = '<div class="activity"><div class="logo git"><img src="images/github.png" class="icon"></div><div><div class="text"><img src="images/gitPic.jpg" class="icon userPic"><p><a href="">'+postData.user+'</a> pushed to <a href="'+postData.repo_url+'">mhacks-web</a>: <a class="commitLink" onclick="$(extra_'+id+').slideToggle(500); return false;">'+num_posts+' commits</a><p class="relTime">45 min ago</p></p></div><div class="votes">\<img src="images/up.png"><p class="votesCount">0</p><img src="images/down.png"></div></div>'+extraCommits+'</div>';
   				}
   				
 				$("#allPosts").append(postHTML);
